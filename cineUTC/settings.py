@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'cineUTC.wsgi.application'
 
 # POSTGRESQL
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://user:password@localhost:5432/mysite')
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600)
 }
 
 # Password validation
