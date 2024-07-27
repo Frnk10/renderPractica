@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'cineUTC.wsgi.application'
 # POSTGRESQL
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/postgres',
+        default='postgresql://postgres:postgres@localhost:5432/bddCineUTC',
         conn_max_age=600    
     )
 }
