@@ -1,7 +1,7 @@
 databases:
   - name: mysitedb
     plan: free
-    databaseName: mysite
+    databaseName: mysite_3ak3
     user: mysite
 
 services:
@@ -14,7 +14,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: mysitedb
-          property: connectionString
+          property: externalConnectionString
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
