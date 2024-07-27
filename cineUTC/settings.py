@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-pv)v37rdx_(ldm5=hq^0lc=wqby6#-^bds5ir!*b^y$4&^+ic0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'cine-utc.onrender.com').split(',')
 
 
 # Application definition
@@ -90,9 +90,7 @@ WSGI_APPLICATION = 'cineUTC.wsgi.application'
 
 # POSTGRESQL
 DATABASES = {
-    'default': dj_database_url.config(
-        conn_max_age=600    
-    )
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 # Password validation
