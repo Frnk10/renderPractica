@@ -90,7 +90,8 @@ WSGI_APPLICATION = 'cineUTC.wsgi.application'
 
 # POSTGRESQL
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600)
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'))
 }
 
 # Password validation
@@ -146,3 +147,5 @@ MEDIA_URL='/media/'
 MEDIA_ROOT= os.path.join(BASE_DIR,'cineUTC/media') #Borrar la coma y  parentesis
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+print("DATABASE_URL:", os.environ.get('DATABASE_URL'))
