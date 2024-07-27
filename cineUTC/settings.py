@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pv)v37rdx_(ldm5=hq^0lc=wqby6#-^bds5ir!*b^y$4&^+ic0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'cine-utc.onrender.com').split(',')
 
@@ -127,9 +127,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR,'cineUTC/static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+#STATICFILES_DIRS = (os.path.join(BASE_DIR,'cineUTC/static'),)
+
 # VALIDACION
 if not DEBUG:
     STATICFILES_ROOT = os.path.join(BASE_DIR,'staticfiles')
