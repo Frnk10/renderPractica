@@ -1,0 +1,63 @@
+{% extends "./plantilla.html"%}
+{%block body%}
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{% url 'insertarDirector' %}" enctype="multipart/form-data" method="post" id="frm_nuevo_director">
+                    {% csrf_token %}
+                    <label for=""><b>APELLIDO:</b></label>
+                    <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Ingrese el apellido del director">
+                    <br>
+                    <label for=""><b>NOMBRE:</b></label>
+                    <input name="nombre" id="nombre" class="form-control" rows="3" placeholder="Ingrese el nombre del director">
+                    <br>
+                    <label for=""><b>ESTADO:</b></label>
+                    <input type="checkbox" name="estado" id="estado">
+                    <br><br>
+                    <label for=""><b>FOTO:</b></label>
+                    <input type="file" name="foto" id="foto"
+                    accept="image/*" required class="form-control">
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'listaDirectores' %}" class="btn btn-light">Cancelar</a>
+                </form>
+            </div>
+        </div> 
+    </div>
+
+    <!--CODIGO PARA VALIDAR-->
+    <script>
+        $("#frm_nuevo_director").validate({
+            rules:{
+                apellido:{
+                    required:true,
+                    minlenght:5,
+                    maxlenght:20,
+
+                },
+                nombre:{
+                    required:true,
+                },
+                foto:{
+                    required:true,
+                    minlenght:70,
+                    maxlenght:100,
+                }
+            },
+            messages:{
+                apellido:{
+                    required:"Por favor, ingrese el dato solicitado",
+                },
+                nombre:{
+                    required:"Por favor, ingrese el dato solicitado"
+                },
+                foto:{
+                    required:"Por favor, seleccione una foto",
+                }
+            }
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "./plantilla.html"%}
+{%block body%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="{% url 'insertarPais' %}" method="post">
+                    {% csrf_token %}                  
+                    <label for=""><b>NOMBRE:</b></label>
+                    <input name="nombre" id="nombre" class="form-control" rows="3" placeholder="Ingrese el nombre del país">
+                    <label for=""> <b>CONTINENTE:</b></label>
+                    <input type="text" name="continente" class="form-control" id="continente" placeholder="Ingrese el nombre del continente">
+                    <label for=""> <b>CAPITAL:</b></label>
+                    <input type="text" name="capital" id="capital" class="form-control" placeholder="Ingrese el nombre de la capital">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'listaPaises' %}" class="btn btn-light">Cancelar</a>
+                </form> 
+            </div>
+        </div> 
+    </div>
+{% endblock %}

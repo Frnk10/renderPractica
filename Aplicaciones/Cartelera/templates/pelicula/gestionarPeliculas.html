@@ -1,0 +1,204 @@
+{% extends "plantilla.html" %}
+{% block body %}
+    <br>
+    <h1 class="text-center">GESTIÓN DE PELÍCULAS CON FETCH</h1>
+    <!-- Button trigger modal -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-end">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#peliculaModal">
+                <i class="fas fa-plus"></i>
+                    Agregar Película Fetch
+                </button>
+                <a href="{% url 'nuevaPelicula' %}" class="btn btn-success">Agregar Película</a>
+            </div>
+            <br>
+            <div class="col-md-12" id="contenedor-peliculas"></div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="peliculaModal" tabindex="-1" aria-labelledby="peliculaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="peliculaModalLabel">DATOS DE LA NUEVA PELÍCULA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="frm_nueva_pelicula" enctype="multipart/form-data">
+                        <label for=""><b>TÍTULO:</b></label>
+                        <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Ingrese el título de la película">
+                        <br>
+                        <label for=""><b>DURACIÓN:</b></label>
+                        <input type="time" name="duracion" id="duracion" class="form-control" placeholder="Ingrese la duración de la película">
+                        <br>
+                        <label for=""><b>SINOPSIS:</b></label>
+                        <textarea name="sinopsis" id="sinopsis" class="form-control" rows="3" placeholder="Escriba la sinopsis"></textarea>
+                        <br>
+                        <label for=""><b>PORTADA:</b></label>
+                        <input type="file" name="portada" id="portada"
+                        accept="image/*" class="form-control">
+                        <br>
+                        <label for=""><b>GÉNERO:</b></label>
+                        <select name="genero" id="genero" class="form-control">
+                            {% for generoTemporal in generos %}
+                                <option value="{{ generoTemporal.id }}">{{ generoTemporal.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <label for=""><b>DIRECTOR:</b></label>
+                        <select name="director" id="director" class="form-control">
+                            {% for directorTemporal in directores %}
+                                <option value="{{ directorTemporal.id }}">{{ directorTemporal.nombre }} {{ directorTemporal.apellido }}</option>
+                            {% endfor %}
+                        </select>
+                        <br><br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                                Guardar
+                            </button>
+                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+    <!--CODIGO PARA VALIDAR-->
+    <script>
+        // document.getElementById('frm_nueva_pelicula')
+        $("#frm_nueva_pelicula").validate({
+            rules:{
+                titulo:{
+                    required:true,
+                    minlength:5,
+                    maxlength:20,
+
+                },
+                duracion:{
+                    required:true,
+                },
+
+                sinopsis:{
+                    required:true,
+                    minlength:5,
+                    maxlength:100,
+                },
+                portada:{
+                    required:true
+                },
+                genero:{
+                    required:true
+                },
+                director:{
+                    required:true
+                }
+            },
+            messages:{
+                titulo:{
+                    required:"Por favor ingrese un título",
+                    minlength:"El nombre debe tener mínimo 5 letras",
+                    maxlength:"Máximo 20 letras"
+                },
+                duracion:{
+                    required:"Por favor, ingrese la duración de la película"
+                },
+                sinopsis:{
+                    required:"Debe escribir la sinopsis de la película",
+                    minlength:"La sinopsis debe tener mínimo 5 letras",
+                    maxlength:"Máximo 100 letras"
+                },
+                portada:{
+                    required:"Por favor, seleccione una foto"
+                },
+                genero:{
+                    required:"Por favor, escoja un género"
+                },
+                director:{
+                    required:"Por favor, escoja un director"
+                }
+            }
+        });
+        //METODO FETCH
+
+        // Funcion para obtener el token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        document.getElementById('frm_nueva_pelicula').addEventListener('submit', function(event){
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/agregarPelicula/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.estado) {
+                    Swal.fire({
+                        title:"CONFIRMACIÓN",
+                        text:data.mensaje,
+                        icon:'success'
+                    });
+                    $('#peliculaModal').modal('hide'); // Ocultar el modal
+                    this.reset(); // resetear el modal
+                    cargarPeliculas(); // Cargar listado de directores después de insertar
+                }else{
+                    Swal.fire({
+                        title:"ERROR",
+                        text:"Error al guardar los datos",
+                        icon:'error'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                Swal.fire({
+                    title: "ERROR",
+                    text: "Error al guardar los datos",
+                    icon: 'error'
+                });
+            });
+        });     
+        //Funcion para cargar el listado de Peliculas con Fetch
+        function cargarPeliculas() {
+            fetch('{% url "listadoPeliculas" %}')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('contenedor-peliculas').innerHTML = data;
+                let table = new DataTable('#tbl-pelicula'); // Inicializar DataTable si es necesario
+            })
+            .catch(error => {
+                console.error('Error al cargar lista de películas:', error);
+            });
+        }
+        cargarPeliculas();
+
+    </script>
+{% endblock %}
