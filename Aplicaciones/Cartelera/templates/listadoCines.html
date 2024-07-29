@@ -5,35 +5,37 @@
         </div>
     </div>
     <br>
-    <table class="table table-bordered table-striped table-hover" id="tbl-cines">
-        <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">NOMBRE</th>
-                <th class="text-center">DIRECCIÓN</th>
-                <th class="text-center">TELÉFONO</th>
-                <th class="text-center">ACCIONES</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cineTemporal in cines %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" id="tbl-cines">
+            <thead>
                 <tr>
-                    <td class="text-center">{{cineTemporal.id}}</td>
-                    <td class="text-center">{{cineTemporal.nombre}}</td>
-                    <td class="text-center">{{cineTemporal.direccion}}</td>
-                    <td class="text-center">{{cineTemporal.telefono}}</td>
-                    <td class="text-center">
-                        <a href="" class="btn btn-warning" title="Editar Cine">
-                            <i class="fas fa-pencil"></i>
-                        </a>
-                        <a href="" onclick="return confirm('Esta seguro?');x" class="btn btn-danger" title="Eliminar Cine">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">NOMBRE</th>
+                    <th class="text-center">DIRECCIÓN</th>
+                    <th class="text-center">TELÉFONO</th>
+                    <th class="text-center">ACCIONES</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for cineTemporal in cines %}
+                    <tr>
+                        <td class="text-center">{{cineTemporal.id}}</td>
+                        <td class="text-center">{{cineTemporal.nombre}}</td>
+                        <td class="text-center">{{cineTemporal.direccion}}</td>
+                        <td class="text-center">{{cineTemporal.telefono}}</td>
+                        <td class="text-center">
+                            <a href="" class="btn btn-warning" title="Editar Cine">
+                                <i class="fas fa-pencil"></i>
+                            </a>
+                            <a href="" onclick="return confirm('Esta seguro?');x" class="btn btn-danger" title="Eliminar Cine">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
     <script>
         var table = new DataTable('#tbl-cines');

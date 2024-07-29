@@ -11,29 +11,31 @@
         <a href="{% url 'nuevoGenero' %}" class="btn btn-success">Agregar Géneros</a>
 
     </div>
-    <table class="table table-bordered table-striped table-hover" id="tbl-generos">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>NOMBRE</th>
-                <th>DESCRIPCIÓN</th>
-                <th>ACCIONES</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for generoTemporal in generos %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" id="tbl-generos">
+            <thead>
                 <tr>
-                    <td>{{generoTemporal.id}}</td>
-                    <td>{{generoTemporal.nombre}}</td>
-                    <td>{{generoTemporal.descripcion}}</td>
-                    <td>
-                        <a href="{% url 'editarGenero' generoTemporal.id %}" class="btn btn-warning">Editar</a>
-                        <a href="{% url 'eliminarGenero' generoTemporal.id %}" onclick="return confirm('Esta seguro?');x" class="btn btn-danger">Eliminar</a>
-                    </td>
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>ACCIONES</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for generoTemporal in generos %}
+                    <tr>
+                        <td>{{generoTemporal.id}}</td>
+                        <td>{{generoTemporal.nombre}}</td>
+                        <td>{{generoTemporal.descripcion}}</td>
+                        <td>
+                            <a href="{% url 'editarGenero' generoTemporal.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'eliminarGenero' generoTemporal.id %}" onclick="return confirm('Esta seguro?');x" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
     <script>
         let table = new DataTable('#tbl-generos');
