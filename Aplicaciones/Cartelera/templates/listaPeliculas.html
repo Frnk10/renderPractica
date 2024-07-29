@@ -11,47 +11,49 @@
         <a href="{% url 'nuevaPelicula' %}" class="btn btn-success">Agregar Película</a>
 
     </div>
-    <table class="table table-bordered table-striped table-hover" id="tbl-peliculas">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>TÍTULO</th>
-                <th>DURACIÓN</th>
-                <th>SINOPSIS</th>
-                <th>GÉNERO</th>
-                <th>DIRECTOR</th>
-                <th>PORTADA</th>
-                <th>ACCIONES</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for peliculaTemporal in peliculas %}
+    <div class="table-response">
+        <table class="table table-bordered table-striped table-hover" id="tbl-peliculas">
+            <thead>
                 <tr>
-                    <td>{{peliculaTemporal.id}}</td>
-                    <td>{{peliculaTemporal.titulo}}</td>
-                    <td>{{peliculaTemporal.duracion}}</td>
-                    <td>{{peliculaTemporal.sinopsis}}</td>
-                    <td>{{peliculaTemporal.genero}}</td>
-                    <td>{{peliculaTemporal.director}}</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{peliculaTemporal.portada.url}}" alt="Portda" width="200px" height="200px">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                              <li><a class="dropdown-item" href="{{peliculaTemporal.portada.url}}" target="_blank">VER</a></li>
-                              <li><a download class="dropdown-item" href="{{peliculaTemporal.portada.url}}">Descargar</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>                      
-                        <a href="{% url 'editarPelicula' peliculaTemporal.id %}" class="btn btn-warning">Editar</a>
-                        <a href="{% url 'eliminarPelicula' peliculaTemporal.id %}" onclick="return confirm('Esta seguro?');x" class="btn btn-danger">Eliminar</a>
-                    </td>
+                    <th>ID</th>
+                    <th>TÍTULO</th>
+                    <th>DURACIÓN</th>
+                    <th>SINOPSIS</th>
+                    <th>GÉNERO</th>
+                    <th>DIRECTOR</th>
+                    <th>PORTADA</th>
+                    <th>ACCIONES</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for peliculaTemporal in peliculas %}
+                    <tr>
+                        <td>{{peliculaTemporal.id}}</td>
+                        <td>{{peliculaTemporal.titulo}}</td>
+                        <td>{{peliculaTemporal.duracion}}</td>
+                        <td>{{peliculaTemporal.sinopsis}}</td>
+                        <td>{{peliculaTemporal.genero}}</td>
+                        <td>{{peliculaTemporal.director}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{peliculaTemporal.portada.url}}" alt="Portda" width="200px" height="200px">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="{{peliculaTemporal.portada.url}}" target="_blank">VER</a></li>
+                                  <li><a download class="dropdown-item" href="{{peliculaTemporal.portada.url}}">Descargar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>                      
+                            <a href="{% url 'editarPelicula' peliculaTemporal.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'eliminarPelicula' peliculaTemporal.id %}" onclick="return confirm('Esta seguro?');x" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
     <script>
         let table = new DataTable('#tbl-peliculas');
