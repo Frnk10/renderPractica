@@ -19,5 +19,6 @@ services:
         generateValue: true
       - key: ALLOWED_HOSTS
         value: cine-utc.onrender.com
+    staticPublishPath: staticfiles
 
 # set postgresql://mysite:jiSH6NeKSALWyvO6csOIiPleJUPtPjU0@dpg-cqimcl8gph6c738rt95g-a.oregon-postgres.render.com/mysite_3ak3
